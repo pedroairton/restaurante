@@ -1,0 +1,40 @@
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100dvh;
+    background-color: #202020;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+    z-index: 1000;
+    .logo{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding-bottom: 2rem;
+        border-bottom: solid 1px white;
+        .img-logo{
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+            img{
+                width: 50px;
+            }
+        }
+        h1{
+            font-size: 1.25rem;
+        }
+    }
+    nav{
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
