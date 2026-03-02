@@ -35,6 +35,16 @@ header{
     nav{
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        a{
+            cursor: pointer;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: .3s ease;
+            &:hover{
+                background-color: #404040;
+            }
+        }
     }
 }

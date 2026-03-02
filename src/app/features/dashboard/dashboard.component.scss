@@ -1,0 +1,59 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  .conteudo {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      //   background-color: white;
+      &.grafico{
+        grid-column: span 2;
+        h3{
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        .itens{
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            .item{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                .desc-item{
+                    .nome{
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                    }
+                }
+                .receita{
+                    font-size: 1.25rem;
+                    font-weight: 600;
+                }
+            }
+        }
+      }
+      transition: 0.3s ease;
+      .topo-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      &:hover {
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      h2 {
+        font-weight: 600;
+      }
+    }
+  }
+}
