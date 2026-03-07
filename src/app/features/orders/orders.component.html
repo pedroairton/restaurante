@@ -1,1 +1,38 @@
-<p>orders works!</p>
+<article class="page-orders">
+    <div class="topo">
+        <h1>Pedidos</h1>
+        <p>Registre um novo e gerencie os pedidos do seu restaurante</p>
+    </div>
+    <div class="conteudo">
+        <form class="form-pedido">
+            <mat-form-field>
+                <mat-label>Mesa do pedido</mat-label>
+                <mat-select>
+                    <mat-option value="1">Mesa 1</mat-option>
+                    <mat-option value="2">Mesa 2</mat-option>
+                    <mat-option value="3">Mesa 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Observações (opcional)</mat-label>
+                <textarea matInput placeholder="Observações"></textarea>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Itens do pedido</mat-label>
+                <mat-select multiple>
+                    <mat-option>Item 1</mat-option>
+                    <mat-option>Item 2</mat-option>
+                    <mat-option>Item 3</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+        <div class="itens-selecionados">
+            <h3>Itens selecionados</h3>
+            <ul>
+                <li>Item 1</li>
+                <li>(2x) Item 2</li>
+                <li>(4x) Item 3</li>
+            </ul>
+        </div>
+    </div>
+</article>

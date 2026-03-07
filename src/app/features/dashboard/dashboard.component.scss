@@ -1,7 +1,4 @@
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
   .conteudo {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
