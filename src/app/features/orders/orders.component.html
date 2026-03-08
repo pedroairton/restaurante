@@ -5,6 +5,7 @@
     </div>
     <div class="conteudo">
         <form class="form-pedido">
+            <h3>Informações do pedido</h3>
             <mat-form-field>
                 <mat-label>Mesa do pedido</mat-label>
                 <mat-select>
@@ -20,19 +21,72 @@
             <mat-form-field>
                 <mat-label>Itens do pedido</mat-label>
                 <mat-select multiple>
-                    <mat-option>Item 1</mat-option>
-                    <mat-option>Item 2</mat-option>
-                    <mat-option>Item 3</mat-option>
+                    <mat-option>Item 1 - R$ 9,99</mat-option>
+                    <mat-option>Item 2 - R$ 19,99</mat-option>
+                    <mat-option>Item 3 - R$ 14,99</mat-option>
                 </mat-select>
             </mat-form-field>
         </form>
+        <div class="resumo-pedido">
+            <h3>Resumo do pedido</h3>
+            <div class="infos">
+                <div class="info">
+                    <span>Mesa</span>
+                    <p class="texto-mesa">Mesa 1</p>
+                </div>
+                <div class="info">
+                    <span>Itens</span>
+                    <p>2</p>
+                </div>
+            </div>
+            <hr>
+            <div class="total">
+                <h2>Total</h2>
+                <h2>R$ 29,97</h2>
+            </div>
+            <div class="observacoes">
+                <small>Observações</small>
+                <mat-form-field>
+                    <mat-label>Observações do pedido</mat-label>
+                    <textarea placeholder="Observações do pedido" matInput></textarea>
+                </mat-form-field>
+            </div>
+            <button class="btn-finalizar">Finalizar pedido</button>
+        </div>
         <div class="itens-selecionados">
             <h3>Itens selecionados</h3>
-            <ul>
-                <li>Item 1</li>
-                <li>(2x) Item 2</li>
-                <li>(4x) Item 3</li>
-            </ul>
+            <table class="tabela-itens">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantidade</th>
+                        <th>Preço unitário</th>
+                        <th>Subtotal</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Item 1</td>
+                        <td><button class="btn-quantidade">-</button> 2 <button class="btn-quantidade">+</button></td>
+                        <td>R$ 9,99</td>
+                        <td>R$ 19,98</td>
+                        <td>
+                            <button>Remover</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Item 2</td>
+                        <td><button class="btn-quantidade">-</button> 1 <button class="btn-quantidade">+</button></td>
+                        <td>R$ 19,99</td>
+                        <td>R$ 19,99</td>
+                        <td>
+                            <button>Remover</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+        
     </div>
 </article>
