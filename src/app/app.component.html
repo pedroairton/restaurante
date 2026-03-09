@@ -1,4 +1,6 @@
-<app-sidebar></app-sidebar>
-<main>
-    <router-outlet></router-outlet>
+@if (!hideSidebar) {
+  <app-sidebar></app-sidebar>
+}
+<main [ngClass]="hideSidebar ? 'main-login' : 'main'">
+  <router-outlet></router-outlet>
 </main>
