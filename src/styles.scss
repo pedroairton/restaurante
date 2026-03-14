@@ -1,4 +1,6 @@
 @use '@angular/material' as mat;
+@use 'ngx-toastr/toastr';
+// @use './app/theme/custom-theme.scss';
 
 // html {
 //   color-scheme: light dark;

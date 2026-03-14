@@ -44,6 +44,11 @@
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
+        select{
+          height: 40px;
+          width: 150px;
+          padding: 0 1rem;
+        }
       }
       &:hover {
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;

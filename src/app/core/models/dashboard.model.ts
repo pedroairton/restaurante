@@ -7,6 +7,6 @@ export interface Dashboard {
 export interface WeeklySales {
     date: string,
     day_name: string,
-    total_products: number,
+    daily_total: number,
     daily_orders: number
 }

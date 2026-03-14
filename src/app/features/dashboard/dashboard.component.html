@@ -1,4 +1,7 @@
 <article class="dashboard">
+  @if (isLoading) {
+    <app-loading></app-loading>
+  }
   <div class="topo">
     <h1>Dashboard</h1>
     <p>Visão geral</p>
@@ -6,28 +9,28 @@
   <div class="conteudo">
     <div class="card">
       <div class="topo-card">
-        <span>Receita Total</span>
+        <span>Receita Total do mês</span>
         <mat-icon>attach_money</mat-icon>
       </div>
-      <h2 class="valor">R$ 15.340,45</h2>
+      <h2 class="valor">{{ floatToBRL(dashboard?.monthly_revenue) }}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
-        <span>Pedidos</span>
+        <span>Pedidos no mês</span>
         <mat-icon>shopping_cart</mat-icon>
       </div>
-      <h2 class="valor">354</h2>
+      <h2 class="valor">{{ dashboard?.monthly_orders}}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
-        <span>Produtos</span>
+        <span>Total de Produtos</span>
         <mat-icon>inventory</mat-icon>
       </div>
-      <h2 class="valor">47</h2>
+      <h2 class="valor">{{ dashboard?.total_products }}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
-        <span>Ticket Médio</span>
+        <span>Ticket Médio deste mês</span>
         <mat-icon>attach_money</mat-icon>
       </div>
       <h2 class="valor">R$ 105,46</h2>
@@ -36,10 +39,22 @@
       <div class="topo-card">
         <h3>Vendas semanais</h3>
       </div>
+      <div class="chart-container">
+        <canvas
+          baseChart
+          [data]="chartData"
+          [options]="chartOptions"
+          [type]="'bar'"
+          ></canvas>
+      </div>
     </div>
     <div class="card grafico">
       <div class="topo-card">
         <h3>Produtos mais vendidos</h3>
+        <select name="" id="">
+          <option value="week" selected>Semana</option>
+          <option value="month">Mês</option>
+        </select>
       </div>
       <div class="itens">
         <div class="item">

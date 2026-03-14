@@ -39,7 +39,7 @@ export class AuthService {
       return of(false);
     }
 
-    return this.http.get<AuthCheckResponse>(`${this.apiUrl}/auth-check`).pipe(
+    return this.http.get<AuthCheckResponse>(`${this.apiUrl}/auth/check`).pipe(
       map((response) => response.authenticated),
       catchError(() => {
         this.clearSession();

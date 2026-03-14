@@ -1,18 +1,18 @@
 <article class="page-login">
-  <form>
+  <form (ngSubmit)="login()" [formGroup]="loginForm">
     <div class="logo">
       <img class="img-logo" src="/logo.png" alt="Logo" />
       <!-- <h1>Restaurante</h1> -->
     </div>
     <mat-form-field>
       <mat-label>Email</mat-label>
-      <input matInput type="email" />
+      <input matInput type="email" formControlName="email" />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Senha</mat-label>
-      <input matInput type="password" />
+      <input matInput type="password" formControlName="password" />
     </mat-form-field>
-    <button class="btn-login" mat-button>
+    <button type="submit" [disabled]="loginForm.invalid" class="btn-login" mat-button>
       <span>Entrar <mat-icon>login</mat-icon></span>
     </button>
   </form>
