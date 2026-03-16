@@ -13,6 +13,9 @@
       // background-color: white;
       &.grafico{
         grid-column: span 2;
+        .chart-container{
+          height: 300px;
+        }
         h3{
             font-size: 1.5rem;
             font-weight: 600;
@@ -47,7 +50,10 @@
         select{
           height: 40px;
           width: 150px;
-          padding: 0 1rem;
+          padding: 0 0.25rem;
+          background-color: unset;
+          border: none;
+          border-bottom: solid 1px black;
         }
       }
       &:hover {

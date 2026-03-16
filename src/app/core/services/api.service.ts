@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dashboard } from '../models/dashboard.model';
+import { CreateOrderPayload } from '../models/order-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +14,17 @@ export class ApiService {
 
   getDashboard(): Observable<Dashboard>{
     return this.http.get<Dashboard>(`${this.apiUrl}/dashboard`);
+  }
+  getProducts(): Observable<any>{
+    return this.http.get(`${this.apiUrl}/products`);
+  }
+  getAvailableTables(params?: any): Observable<any>{
+    return this.http.get(`${this.apiUrl}/tables`, {params: {status: 'available'}});
+  }
+  getOrders(params?: any): Observable<any>{
+    return this.http.get(`${this.apiUrl}/orders`, {params});
+  }
+  createOrder(payload: CreateOrderPayload): Observable<any>{
+    return this.http.post(`${this.apiUrl}/orders`, payload);
   }
 }

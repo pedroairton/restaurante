@@ -14,6 +14,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
         path: 'dashboard',
+        title: 'Restaurante |Dashboard',
         loadComponent: () =>
           import('./features/dashboard/dashboard.component').then(
             (m) => m.DashboardComponent,
@@ -21,6 +22,7 @@ export const routes: Routes = [
       },
       {
         path: 'pedidos',
+        title: 'Restaurante | Pedidos',
         loadComponent: () =>
           import('./features/orders/orders.component').then(
             (m) => m.OrdersComponent,
@@ -28,6 +30,7 @@ export const routes: Routes = [
       },
       {
         path: 'produtos',
+        title: 'Restaurante | Produtos',
         loadComponent: () =>
           import('./features/products/products.component').then(
             (m) => m.ProductsComponent,
@@ -35,6 +38,7 @@ export const routes: Routes = [
       },
       {
         path: 'relatorios',
+        title: 'Restaurante | Relatórios',
         loadComponent: () =>
           import('./features/reports/reports.component').then(
             (m) => m.ReportsComponent,

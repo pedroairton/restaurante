@@ -78,6 +78,7 @@ export class DashboardComponent {
           display: false,
         },
         ticks: {
+          precision: 0,
           callback: (value) => {
             return value;
           },
