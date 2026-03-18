@@ -1,1 +1,51 @@
-<p>products works!</p>
+<article class="page-products">
+  <div class="topo">
+    <h1>Produtos</h1>
+    <p>Gerencie o cardápio do seu restaurante</p>
+  </div>
+  <div class="conteudo-produtos">
+    <div class="filtros">
+        <mat-form-field>
+            <mat-label>Buscar produtos...</mat-label>
+            <input type="text" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Categoria</mat-label>
+            <mat-select [disabled]="categories.length == 0">
+                @for (category of categories; track category.id) {
+                    <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <button (click)="openDialog()">Novo Produto</button>
+    </div>
+    <div class="tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                    <th>Descrição</th>
+                    <th>Categoria</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (product of products; track product.id) {
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.price | currency: 'BRL' : 'symbol': '1.2-2' }}</td>
+                        <td>{{ product.description }}</td>
+                        <td>{{ product.category.name }}</td>
+                        <td>
+                            <button type="button" class="btn-dados">Dados</button>
+                            <button type="button" (click)="openDialog(product)" class="btn-editar">Editar</button>
+                            <button type="button" class="btn-excluir">Excluir</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+  </div>
+</article>

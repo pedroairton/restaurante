@@ -10,3 +10,9 @@ export interface Product {
         name: string;
     }
 }
+
+export interface Category {
+    id: number;
+    name: string;
+    products_count: number;
+}

@@ -1,0 +1,37 @@
+.page-products {
+  .conteudo-produtos {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1rem;
+    border-radius: 1rem;
+    .filtros{
+        width: 50%;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        mat-form-field:first-child{
+            flex: 1;
+        }
+    }
+    .tabela{
+        width: 100%;
+        table{
+            width: 100%;
+            border-collapse: collapse;
+            th{
+                text-align: start;
+            }
+            th,td{
+                padding: 0.75rem 0;
+            }
+            tr{
+                &:not(:last-child){
+                    td{
+                        border-bottom: solid 1px #dadada;
+                    }
+                }
+            }
+        }
+    }
+  }
+}
