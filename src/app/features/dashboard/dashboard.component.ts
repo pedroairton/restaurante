@@ -1,14 +1,20 @@
 import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ApiService } from '../../core/services/api.service';
-import { Dashboard, WeeklySales } from '../../core/models/dashboard.model';
+import {
+  Dashboard,
+  TopProducts,
+  WeeklySales,
+} from '../../core/models/dashboard.model';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import { ToastrService } from 'ngx-toastr';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatIconModule, LoadingComponent, BaseChartDirective],
+  imports: [MatIconModule, LoadingComponent, BaseChartDirective, CurrencyPipe],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
@@ -32,7 +38,7 @@ export class DashboardComponent {
             const value = context.parsed.y;
             const axis = context.dataset.yAxisID;
 
-            if(axis === 'yRevenue') {
+            if (axis === 'yRevenue') {
               return `${context.dataset.label}: R$ ${value?.toFixed(2)}`;
             }
 
@@ -92,10 +98,13 @@ export class DashboardComponent {
     },
   };
   private apiService = inject(ApiService);
-  public dashboard: Dashboard | null = null;
+  private toastr = inject(ToastrService);
+  dashboard: Dashboard | null = null;
+  topProducts: TopProducts[] = [];
   isLoading = false;
 
-  constructor() {
+  constructor() {}
+  ngOnInit() {
     this.getDashboard();
   }
   ngOnChanges(changes: SimpleChanges) {
@@ -125,6 +134,25 @@ export class DashboardComponent {
       error: (error) => {
         this.isLoading = false;
         console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao buscar dashboard',
+        );
+      },
+    });
+    this.apiService.getTopProducts().subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.topProducts = response;
+        console.log(this.topProducts);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao buscar produtos mais vendidos',
+        );
       },
     });
   }
@@ -136,8 +164,8 @@ export class DashboardComponent {
           label: 'Receita',
           data: this.weeklySales.map((day) => day.daily_total),
           yAxisID: 'yRevenue',
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
+          backgroundColor: 'rgba(55, 199, 132, 0.2)',
+          borderColor: 'rgba(55, 199, 132, 1)',
           borderWidth: 1,
           borderRadius: 4,
         },
@@ -145,8 +173,8 @@ export class DashboardComponent {
           label: 'Vendas',
           data: this.weeklySales.map((day) => day.daily_orders),
           yAxisID: 'yOrders',
-          backgroundColor: 'rgba(55, 199, 132, 0.2)',
-          borderColor: 'rgba(55, 199, 132, 1)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
           borderWidth: 1,
           borderRadius: 4,
         },

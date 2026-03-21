@@ -16,3 +16,22 @@ export interface Category {
     name: string;
     products_count: number;
 }
+
+export interface SalesStats {
+    weeklySales: {
+        week: number;
+        week_start: string;
+        total_sold: number | string;
+        total_revenue: number | string;
+    }[],
+    monthlySales: {
+        year: number;
+        month: number;
+        total_sold: number | string;
+        total_revenue: number | string;
+    }[],
+    totals: {
+        total_sold: number | string;
+        total_revenue: number | string;
+    }
+}

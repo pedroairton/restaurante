@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CurrencyPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormProductComponent } from '../dialog/products/form-product/form-product.component';
+import { ChartProductComponent } from '../dialog/products/chart-product/chart-product.component';
 
 @Component({
   selector: 'app-products',
@@ -65,5 +66,11 @@ export class ProductsComponent {
     dialogRef.afterClosed().subscribe((result) => {
       this.loadProducts();
     });
+  }
+  openChartDialog(product: Product) {
+    const dialogRef = this.dialog.open(ChartProductComponent, {
+      width: '800px',
+      data: product,
+    })
   }
 }

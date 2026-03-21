@@ -15,6 +15,9 @@ export class ApiService {
   getDashboard(): Observable<Dashboard>{
     return this.http.get<Dashboard>(`${this.apiUrl}/dashboard`);
   }
+  getTopProducts(): Observable<any>{
+    return this.http.get(`${this.apiUrl}/dashboard/top-products`);
+  }
   getProducts(params?: any): Observable<any>{
     return this.http.get(`${this.apiUrl}/products`, {params});
   }
@@ -35,5 +38,8 @@ export class ApiService {
   }
   updateProduct(id: number, payload: any): Observable<any>{
     return this.http.put(`${this.apiUrl}/products/${id}`, payload);
+  }
+  getProductSalesStats(id: number): Observable<any>{
+    return this.http.get(`${this.apiUrl}/products/${id}/sales-stats`);
   }
 }

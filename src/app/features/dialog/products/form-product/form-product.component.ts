@@ -15,9 +15,9 @@ import { MatSelectModule } from '@angular/material/select';
   styleUrl: './form-product.component.scss'
 })
 export class FormProductComponent {
+  readonly data = inject(MAT_DIALOG_DATA)
+  readonly dialogRef = inject(MatDialogRef<FormProductComponent>)
   private fb = inject(FormBuilder)
-  private dialogRef = inject(MatDialogRef<FormProductComponent>)
-  data = inject(MAT_DIALOG_DATA)
   private apiService = inject(ApiService)
   private toastr = inject(ToastrService)
   productForm: FormGroup

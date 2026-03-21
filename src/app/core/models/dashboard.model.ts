@@ -10,3 +10,9 @@ export interface WeeklySales {
     daily_total: number,
     daily_orders: number
 }
+export interface TopProducts {
+    id: number,
+    product_name: string,
+    total_sold: string,
+    total_revenue: string
+}

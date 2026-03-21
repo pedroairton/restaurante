@@ -1,1 +1,17 @@
-<p>chart-product works!</p>
+<div class="dialog-chart-product">
+    <div class="topo">
+        <h2>Estatísticas de vendas</h2>
+        <select (change)="changePeriod($event)">
+            <option value="week" selected>Semana</option>
+            <option value="month">Mês</option>
+        </select>
+    </div>
+  <div class="chart-container">
+      <canvas
+        baseChart
+        [data]="chartData"
+        [options]="chartOptions"
+        [type]="'bar'"
+      ></canvas>
+  </div>
+</div>
