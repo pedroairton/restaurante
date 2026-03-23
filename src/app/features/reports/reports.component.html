@@ -1,1 +1,55 @@
-<p>reports works!</p>
+<article class="page-reports">
+  @if (isLoading) {
+    <app-loading></app-loading>
+  }
+  <div class="topo">
+    <div class="titulo">
+      <h1>Relatórios</h1>
+      <p>Métricas e insights do sistema</p>
+    </div>
+    <div class="periodo">
+      <label for="periodo"></label>
+      <select name="" id="periodo">
+        <option value="month" selected>Último Mês</option>
+        <option value="week">Última Semana</option>
+      </select>
+    </div>
+  </div>
+  <div class="conteudo">
+    <div class="card">
+      <div class="topo-card">
+        <span>Receita Total do mês</span>
+        <mat-icon>attach_money</mat-icon>
+      </div>
+      <h2 class="valor">R$ 777</h2>
+    </div>
+    <div class="card">
+      <div class="topo-card">
+        <span>Pedidos</span>
+        <mat-icon>shopping_cart</mat-icon>
+      </div>
+      <h2 class="valor">77</h2>
+    </div>
+    <div class="card">
+      <div class="topo-card">
+        <span>Ticket Médio</span>
+        <mat-icon>attach_money</mat-icon>
+      </div>
+      <h2 class="valor">R$ 105,46</h2>
+    </div>
+    <div class="card grafico">
+        <div class="topo-card">
+            <h3>Vendas por categoria</h3>
+        </div>
+      <div class="chart-container">
+        <canvas
+          baseChart
+          [data]="chartData"
+          [options]="chartOptions"
+          [type]="'pie'"
+        >
+        </canvas>
+      </div>
+    </div>
+  </div>
+</article>
