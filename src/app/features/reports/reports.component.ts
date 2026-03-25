@@ -1,60 +1,69 @@
-import { Component, SimpleChanges, OnChanges } from '@angular/core';
+import {
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
+import { ApiService } from '../../core/services/api.service';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {
+  MAT_DATE_FORMATS,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Report } from '../../core/models/reports.model';
+import { CurrencyPipe } from '@angular/common';
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @Component({
   selector: 'app-reports',
-  imports: [LoadingComponent, MatIconModule, BaseChartDirective],
+  imports: [
+    LoadingComponent,
+    MatIconModule,
+    BaseChartDirective,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    CurrencyPipe
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+  ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportsComponent {
   isLoading = false;
-  salesByCategory: {
-    id: number;
-    name: string;
-    total_revenue: string;
-    total_quantity: string;
-    percentage: string;
-  }[] = [
-        {
-            "id": 1,
-            "name": "Entradas",
-            "total_revenue": "220.30",
-            "total_quantity": "7",
-            "percentage": "30.42"
-        },
-        {
-            "id": 8,
-            "name": "Bebidas",
-            "total_revenue": "176.90",
-            "total_quantity": "21",
-            "percentage": "24.43"
-        },
-        {
-            "id": 7,
-            "name": "Sobremesas",
-            "total_revenue": "124.50",
-            "total_quantity": "5",
-            "percentage": "17.19"
-        },
-        {
-            "id": 3,
-            "name": "Massas",
-            "total_revenue": "116.70",
-            "total_quantity": "3",
-            "percentage": "16.11"
-        },
-        {
-            "id": 2,
-            "name": "Pratos Principais",
-            "total_revenue": "85.80",
-            "total_quantity": "2",
-            "percentage": "11.85"
-        }
-    ];
+  private apiService = inject(ApiService);
+  private fb = inject(FormBuilder);
+  private toastr = inject(ToastrService);
+
+  date = new Date();
+  firstMonthDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+
+  rangeForm = this.fb.group({
+    start_date: [this.firstMonthDay as Date | null, [Validators.required]],
+    end_date: [this.date as Date | null, [Validators.required]],
+  });
+
+  report: Report | null = null;
 
   chartData: ChartData<'pie'> = {
     labels: [],
@@ -106,22 +115,87 @@ export class ReportsComponent {
     '#E11D48',
   ];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['salesByCategory'] && this.salesByCategory.length) {
-      this.updateChart();
+  ngOnInit() {
+    this.loadMonthlyReport();
+  }
+  loadMonthlyReport() {
+    const params = {
+      start_date: this.firstMonthDay.toISOString().split('T')[0],
+      end_date: this.date.toISOString().split('T')[0],
+    };
+    this.apiService.getReports(params).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.report = response;
+        console.log(this.report);
+        this.updateChart();
+      },
+      error: (error) => {
+        console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao buscar relatórios',
+        );
+        this.isLoading = false;
+      },
+    });
+  }
+  submit() {
+    if (this.rangeForm.invalid) {
+      return;
     }
-  }
-  ngOnInit(){
-    this.updateChart();
-  }
 
+    const { start_date, end_date } = this.rangeForm.getRawValue();
+
+    const params: any = {};
+
+    const formattedStart = this.formatDate(start_date);
+    const formattedEnd = this.formatDate(end_date);
+
+    if (formattedStart) params.start_date = formattedStart;
+    if (formattedEnd) params.end_date = formattedEnd;
+
+    this.isLoading = true;
+
+    this.apiService.getReports(params).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.report = response;
+        console.log(this.report);
+        this.updateChart();
+      },
+      error: (error) => {
+        console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao buscar relatórios',
+        );
+        this.isLoading = false;
+      },
+    });
+  }
+  private formatDate(date: Date | null): string | null {
+    if (!date) return null;
+    return date.toISOString().split('T')[0];
+  }
   private updateChart(): void {
+    if (!this.report) {
+      this.toastr.error('Selecione um período', 'Atenção');
+      return;
+    }
+    console.log(this.report.sales_by_category);
+
     this.chartData = {
-      labels: this.salesByCategory.map((cat) => cat.name),
+      labels: this.report.sales_by_category.map((cat) => cat.name),
       datasets: [
         {
-          data: this.salesByCategory.map((cat) => Number(cat.total_revenue)),
-          backgroundColor: this.colors.slice(0, this.salesByCategory.length),
+          data: this.report.sales_by_category.map((cat) =>
+            Number(cat.total_revenue),
+          ),
+          backgroundColor: this.colors.slice(
+            0,
+            this.report.sales_by_category.length,
+          ),
           borderWidth: 2,
           borderColor: '#ffffff',
         },

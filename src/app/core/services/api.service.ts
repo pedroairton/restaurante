@@ -42,4 +42,7 @@ export class ApiService {
   getProductSalesStats(id: number): Observable<any>{
     return this.http.get(`${this.apiUrl}/products/${id}/sales-stats`);
   }
+  getReports(params: {start_date?: string, end_date?: string}): Observable<any>{
+    return this.http.get(`${this.apiUrl}/reports`, {params});
+  }
 }

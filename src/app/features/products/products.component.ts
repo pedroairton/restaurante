@@ -9,10 +9,11 @@ import { CurrencyPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { FormProductComponent } from '../dialog/products/form-product/form-product.component';
 import { ChartProductComponent } from '../dialog/products/chart-product/chart-product.component';
+import { LoadingComponent } from "../../shared/components/loading/loading.component";
 
 @Component({
   selector: 'app-products',
-  imports: [MatFormFieldModule, MatLabel, MatInputModule, MatSelectModule, CurrencyPipe],
+  imports: [MatFormFieldModule, MatLabel, MatInputModule, MatSelectModule, CurrencyPipe, LoadingComponent],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -21,6 +22,7 @@ export class ProductsComponent {
   products: Product[] = [];
   private apiService = inject(ApiService);
   private toastr = inject(ToastrService);
+  isLoading = false;
 
   constructor(private dialog: MatDialog) {}
 
@@ -44,10 +46,12 @@ export class ProductsComponent {
     });
   }
   loadProducts(params?: any) {
+    this.isLoading = true;
     this.apiService.getProducts(params).subscribe({
       next: (response) => {
         console.log(response);
         this.products = response.data;
+        this.isLoading = false;
       },
       error: (error) => {
         console.log(error);
@@ -55,6 +59,7 @@ export class ProductsComponent {
           error.error?.message || 'Erro desconhecido',
           'Erro ao buscar produtos',
         );
+        this.isLoading = false;
       },
     });
   }

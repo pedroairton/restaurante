@@ -8,11 +8,30 @@
       <p>Métricas e insights do sistema</p>
     </div>
     <div class="periodo">
-      <label for="periodo"></label>
-      <select name="" id="periodo">
-        <option value="month" selected>Último Mês</option>
-        <option value="week">Última Semana</option>
-      </select>
+      <form (ngSubmit)="submit()" [formGroup]="rangeForm">
+        <mat-form-field>
+          <mat-label>Enter a date range</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              formControlName="start_date"
+              matStartDate
+              placeholder="Start date"
+            />
+            <input
+              formControlName="end_date"
+              matEndDate
+              placeholder="End date"
+            />
+          </mat-date-range-input>
+          <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button type="submit">Enviar</button>
+      </form>
     </div>
   </div>
   <div class="conteudo">
@@ -21,26 +40,29 @@
         <span>Receita Total do mês</span>
         <mat-icon>attach_money</mat-icon>
       </div>
-      <h2 class="valor">R$ 777</h2>
+      <!-- placeholder -->
+      <h2 class="valor">{{ report?.total_revenue | currency: 'BRL' : 'symbol': '1.2-2' }}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
         <span>Pedidos</span>
         <mat-icon>shopping_cart</mat-icon>
       </div>
-      <h2 class="valor">77</h2>
+      <!-- placeholder -->
+      <h2 class="valor">{{ report?.total_orders }}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
         <span>Ticket Médio</span>
         <mat-icon>attach_money</mat-icon>
       </div>
-      <h2 class="valor">R$ 105,46</h2>
+      <!-- placeholder -->
+      <h2 class="valor">{{ report?.average_ticket | currency: 'BRL' : 'symbol': '1.2-2' }}</h2>
     </div>
     <div class="card grafico">
-        <div class="topo-card">
-            <h3>Vendas por categoria</h3>
-        </div>
+      <div class="topo-card">
+        <h3>Vendas por categoria</h3>
+      </div>
       <div class="chart-container">
         <canvas
           baseChart
