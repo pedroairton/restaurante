@@ -5,14 +5,22 @@
   </div>
   <div class="conteudo">
     <form class="form-pedido" (ngSubmit)="submit()">
-      <h3>Informações do pedido</h3>
+      <div class="topo-form">
+        <h3>Informações do pedido</h3>
+        @if (isEditMode) {
+          <h3>Editando pedido</h3>
+          <button (click)="resetForm()" class="btn-cancelar">
+            Cancelar edição
+          </button>
+        } @else {
+          <h3>Novo pedido</h3>
+        }
+      </div>
       <mat-form-field>
         <mat-label>Mesa do pedido</mat-label>
         <mat-select [formControl]="tableControl">
           @for (table of tables; track table.id) {
-            <mat-option [value]="table.id"
-              >Mesa {{ table.number }}</mat-option
-            >
+            <mat-option [value]="table.id">Mesa {{ table.number }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
@@ -31,12 +39,20 @@
 
             @for (product of filteredProducts | async; track product.id) {
               <mat-option [value]="product.id">
-                {{ product.name }} - {{ product.price | currency: 'BRL' : 'symbol': '1.2-2' }}
+                {{ product.name }} -
+                {{ product.price | currency: "BRL" : "symbol" : "1.2-2" }}
               </mat-option>
             }
           </mat-select>
         </mat-form-field>
-        <button type="button" (click)="addProduct()" title="Adicionar produto" class="btn-add">+</button>
+        <button
+          type="button"
+          (click)="addProduct()"
+          title="Adicionar produto"
+          class="btn-add"
+        >
+          +
+        </button>
       </div>
       <div class="itens-selecionados">
         <h3>Itens selecionados</h3>
@@ -51,18 +67,50 @@
             </tr>
           </thead>
           <tbody>
-            @for (item of selectedItems; track item.product.id; let i = $index) {
-                <tr>
-                    <td>{{ item.product.name }}</td>
-                    <td class="quantidade-cell">
-                        <button type="button" (click)="decrementQuantity(i)" class="btn-quantidade" title="Diminuir quantidade">-</button>
-                        <span>{{ item.quantity }}</span>
-                        <button type="button" (click)="incrementQuantity(i)" class="btn-quantidade" title="Aumentar quantidade">+</button>
-                    </td>
-                    <td>{{ item.product.price | currency: 'BRL' : 'symbol': '1.2-2' }}</td>
-                    <td>{{ item.subtotal | currency: 'BRL' : 'symbol': '1.2-2' }}</td>
-                    <td><button type="button" (click)="removeItem(i)" title="Remover item">Remover</button></td>
-                </tr>
+            @for (
+              item of selectedItems;
+              track item.product.id;
+              let i = $index
+            ) {
+              <tr>
+                <td>{{ item.product.name }}</td>
+                <td class="quantidade-cell">
+                  <button
+                    type="button"
+                    (click)="decrementQuantity(i)"
+                    class="btn-quantidade"
+                    title="Diminuir quantidade"
+                  >
+                    -
+                  </button>
+                  <span>{{ item.quantity }}</span>
+                  <button
+                    type="button"
+                    (click)="incrementQuantity(i)"
+                    class="btn-quantidade"
+                    title="Aumentar quantidade"
+                  >
+                    +
+                  </button>
+                </td>
+                <td>
+                  {{
+                    item.product.price | currency: "BRL" : "symbol" : "1.2-2"
+                  }}
+                </td>
+                <td>
+                  {{ item.subtotal | currency: "BRL" : "symbol" : "1.2-2" }}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    (click)="removeItem(i)"
+                    title="Remover item"
+                  >
+                    Remover
+                  </button>
+                </td>
+              </tr>
             }
             <!-- <tr>
               <td>Item 1</td>
@@ -97,7 +145,14 @@
       <div class="infos">
         <div class="info">
           <span>Mesa</span>
-          <p class="texto-mesa">Mesa {{ selectedTableNumber ? selectedTableNumber : 'Nenhuma mesa selecionada' }}</p>
+          <p class="texto-mesa">
+            Mesa
+            {{
+              selectedTableNumber
+                ? selectedTableNumber
+                : "Nenhuma mesa selecionada"
+            }}
+          </p>
         </div>
         <div class="info">
           <span>Itens</span>
@@ -107,18 +162,94 @@
       <hr />
       <div class="total">
         <h3>Total</h3>
-        <h3>{{ totalPrice | currency: 'BRL' : 'symbol': '1.2-2' }}</h3>
+        <h3>{{ totalPrice | currency: "BRL" : "symbol" : "1.2-2" }}</h3>
       </div>
       <div class="observacoes">
         <small>Observações</small>
         <mat-form-field>
           <mat-label>Observações do pedido (opcional)</mat-label>
-          <textarea [formControl]="observationsControl" rows="3" placeholder="Ex: Sem cebola, ponto da carne mal passado..." matInput></textarea>
+          <textarea
+            [formControl]="observationsControl"
+            rows="3"
+            placeholder="Ex: Sem cebola, ponto da carne mal passado..."
+            matInput
+          ></textarea>
         </mat-form-field>
       </div>
       <button (click)="submit()" class="btn-finalizar" [disabled]="!canSubmit">
-        {{ isSubmitting ? 'Enviando...' : 'Finalizar pedido' }}
+        {{ isSubmitting ? "Enviando..." : "Finalizar pedido" }}
       </button>
+    </div>
+    <div class="pedidos">
+      <h3>Pedidos em andamento</h3>
+      <div class="lista-pedidos">
+        @for (order of pendingOrders; track order.id) {
+          <mat-accordion class="pedido">
+            <mat-expansion-panel class="mat-elevation-z">
+              <mat-expansion-panel-header>
+                <div class="header-panel">
+                  <mat-panel-title>
+                    <h4>
+                      Mesa {{ order.table.number }} - Total:
+                      {{ order.total | currency: "BRL" : "symbol" : "1.2-2" }}
+                    </h4>
+                  </mat-panel-title>
+                  <mat-panel-description>
+                    Pedido feito às {{ order.created_at | date: "HH:mm" }} -
+                    {{ order.created_at | date: "dd/MM/yyyy" }}
+                  </mat-panel-description>
+                  <div class="btns">
+                    <button
+                      class="btn-finalizar"
+                      (click)="finalizeOrder(order)"
+                      [disabled]="isEditMode"
+                    >
+                      Finalizar
+                    </button>
+                    <button
+                      class="btn-cancelar"
+                      (click)="cancelOrder(order)"
+                      [disabled]="isEditMode"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel-header>
+              <hr />
+              <div class="itens">
+                <div class="topo-itens">
+                  <h4>Itens do pedido</h4>
+                  <div class="btns">
+                    <button
+                      (click)="editOrder(order)"
+                      class="btn-editar"
+                      [disabled]="isEditMode && editingOrderId !== order.id"
+                    >
+                      @if (editingOrderId === order.id) {
+                        Editando...
+                      } @else {
+                        Editar itens
+                      }
+                    </button>
+                  </div>
+                </div>
+                @for (item of order.items; track item.id) {
+                  <div class="item">
+                    <div class="desc-item">
+                      <h4 class="nome">{{ item.product.name }}</h4>
+                      <span class="vendas">{{ item.quantity }}x</span>
+                    </div>
+                    <span class="receita">
+                      {{ item.subtotal | currency: "BRL" : "symbol" : "1.2-2" }}
+                    </span>
+                  </div>
+                }
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        }
+      </div>
     </div>
   </div>
 </article>

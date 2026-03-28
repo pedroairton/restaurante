@@ -6,43 +6,59 @@ import { Dashboard } from '../models/dashboard.model';
 import { CreateOrderPayload } from '../models/order-item.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private apiUrl = environment.apiUrl;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getDashboard(): Observable<Dashboard>{
+  getDashboard(): Observable<Dashboard> {
     return this.http.get<Dashboard>(`${this.apiUrl}/dashboard`);
   }
-  getTopProducts(): Observable<any>{
+  getTopProducts(): Observable<any> {
     return this.http.get(`${this.apiUrl}/dashboard/top-products`);
   }
-  getProducts(params?: any): Observable<any>{
-    return this.http.get(`${this.apiUrl}/products`, {params});
+  getProducts(params?: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/products`, { params });
   }
-  getAvailableTables(params?: any): Observable<any>{
-    return this.http.get(`${this.apiUrl}/tables`, {params: {status: 'available'}});
+  getTables(params?: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/tables`, 
+    //   {
+    //   params: { status: 'available' },
+    // }
+  );
   }
-  getOrders(params?: any): Observable<any>{
-    return this.http.get(`${this.apiUrl}/orders`, {params});
+  getOrders(params?: any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/orders`, { params });
   }
-  createOrder(payload: CreateOrderPayload): Observable<any>{
+  createOrder(payload: CreateOrderPayload): Observable<any> {
     return this.http.post(`${this.apiUrl}/orders`, payload);
   }
-  getCategories(): Observable<any>{
+  getCategories(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categories`);
   }
-  createProduct(payload: any): Observable<any>{
+  createProduct(payload: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/products`, payload);
   }
-  updateProduct(id: number, payload: any): Observable<any>{
+  updateProduct(id: number, payload: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/products/${id}`, payload);
   }
-  getProductSalesStats(id: number): Observable<any>{
+  getProductSalesStats(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/${id}/sales-stats`);
   }
-  getReports(params: {start_date?: string, end_date?: string}): Observable<any>{
-    return this.http.get(`${this.apiUrl}/reports`, {params});
+  getReports(params: {
+    start_date?: string;
+    end_date?: string;
+  }): Observable<any> {
+    return this.http.get(`${this.apiUrl}/reports`, { params });
+  }
+  updateOrder(orderId: number, payload: CreateOrderPayload): Observable<any> {
+    return this.http.put(`${this.apiUrl}/orders/${orderId}`, payload);
+  }
+
+  updateOrderStatus(orderId: number, status: string): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/orders/${orderId}/status`, {
+      status,
+    });
   }
 }
