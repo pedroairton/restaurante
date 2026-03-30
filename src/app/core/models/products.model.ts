@@ -5,10 +5,10 @@ export interface Product {
     price: number;
     description: string;
     is_active: boolean;
-    // category: {
-    //     id: number;
-    //     name: string;
-    // }
+    category?: {
+        id: number;
+        name: string;
+    }
 }
 
 export interface Category {

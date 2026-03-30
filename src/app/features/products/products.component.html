@@ -39,7 +39,7 @@
                         <td>{{ product.name }}</td>
                         <td>{{ product.price | currency: 'BRL' : 'symbol': '1.2-2' }}</td>
                         <td>{{ product.description }}</td>
-                        <td>{{ product.category.name }}</td>
+                        <td>{{ product.category?.name }}</td>
                         <td>
                             <button type="button" (click)="openChartDialog(product)" class="btn-dados">Dados</button>
                             <button type="button" (click)="openDialog(product)" class="btn-editar">Editar</button>

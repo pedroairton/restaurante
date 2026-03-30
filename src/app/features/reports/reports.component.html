@@ -41,7 +41,9 @@
         <mat-icon>attach_money</mat-icon>
       </div>
       <!-- placeholder -->
-      <h2 class="valor">{{ report?.total_revenue | currency: 'BRL' : 'symbol': '1.2-2' }}</h2>
+      <h2 class="valor">
+        {{ report?.total_revenue | currency: "BRL" : "symbol" : "1.2-2" }}
+      </h2>
     </div>
     <div class="card">
       <div class="topo-card">
@@ -57,21 +59,29 @@
         <mat-icon>attach_money</mat-icon>
       </div>
       <!-- placeholder -->
-      <h2 class="valor">{{ report?.average_ticket | currency: 'BRL' : 'symbol': '1.2-2' }}</h2>
+      <h2 class="valor">
+        {{ report?.average_ticket | currency: "BRL" : "symbol" : "1.2-2" }}
+      </h2>
     </div>
     <div class="card grafico">
       <div class="topo-card">
         <h3>Vendas por categoria</h3>
       </div>
-      <div class="chart-container">
-        <canvas
-          baseChart
-          [data]="chartData"
-          [options]="chartOptions"
-          [type]="'pie'"
-        >
-        </canvas>
+      @if (report) {
+        <app-chart-sales-by-category
+          [salesByCategory]="report.sales_by_category"
+        ></app-chart-sales-by-category>
+      }
+    </div>
+    <div class="card grafico">
+      <div class="topo-card">
+        <h3>Produtos mais vendidos</h3>
       </div>
+      @if (report) {
+        <app-chart-top-products
+          [products]="report.top_products"
+        ></app-chart-top-products>
+      }
     </div>
   </div>
 </article>

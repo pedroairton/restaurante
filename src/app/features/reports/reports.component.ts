@@ -1,8 +1,4 @@
-import {
-  Component,
-  inject,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BaseChartDirective } from 'ng2-charts';
@@ -18,6 +14,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Report } from '../../core/models/reports.model';
 import { CurrencyPipe } from '@angular/common';
+import { ChartTopProductsComponent } from '../report-charts/chart-top-products/chart-top-products.component';
+import { ChartSalesByCategoryComponent } from "../report-charts/chart-sales-by-category/chart-sales-by-category.component";
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -35,12 +33,13 @@ export const MY_DATE_FORMATS = {
   imports: [
     LoadingComponent,
     MatIconModule,
-    BaseChartDirective,
     MatFormFieldModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    CurrencyPipe
-  ],
+    CurrencyPipe,
+    ChartTopProductsComponent,
+    ChartSalesByCategoryComponent
+],
   providers: [
     provideNativeDateAdapter(),
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
@@ -65,56 +64,6 @@ export class ReportsComponent {
 
   report: Report | null = null;
 
-  chartData: ChartData<'pie'> = {
-    labels: [],
-    datasets: [],
-  };
-
-  chartOptions: ChartConfiguration<'pie'>['options'] = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'right',
-        labels: {
-          padding: 16,
-          usePointStyle: true,
-        },
-      },
-      tooltip: {
-        callbacks: {
-          label: (context) => {
-            const label = context.label || '';
-            const value = context.parsed;
-            const total = context.dataset.data.reduce(
-              (sum: number, val: any) =>
-                sum + (typeof val === 'number' ? val : 0),
-              0,
-            );
-            const percentage = ((value / total) * 100).toFixed(1);
-            return ` ${label}: R$ ${value.toFixed(2)} (${percentage}%)`;
-          },
-        },
-      },
-    },
-  };
-
-  // Paleta de cores
-  private colors = [
-    '#3B82F6',
-    '#EF4444',
-    '#10B981',
-    '#F59E0B',
-    '#8B5CF6',
-    '#EC4899',
-    '#06B6D4',
-    '#F97316',
-    '#84CC16',
-    '#6366F1',
-    '#14B8A6',
-    '#E11D48',
-  ];
-
   ngOnInit() {
     this.loadMonthlyReport();
   }
@@ -127,8 +76,11 @@ export class ReportsComponent {
       next: (response) => {
         this.isLoading = false;
         this.report = response;
+        if (!this.report) {
+          this.toastr.error('Selecione um período', 'Atenção');
+          return;
+        }
         console.log(this.report);
-        this.updateChart();
       },
       error: (error) => {
         console.log(error);
@@ -161,8 +113,11 @@ export class ReportsComponent {
       next: (response) => {
         this.isLoading = false;
         this.report = response;
+        if (!this.report) {
+          this.toastr.error('Selecione um período', 'Atenção');
+          return;
+        }
         console.log(this.report);
-        this.updateChart();
       },
       error: (error) => {
         console.log(error);
@@ -177,29 +132,5 @@ export class ReportsComponent {
   private formatDate(date: Date | null): string | null {
     if (!date) return null;
     return date.toISOString().split('T')[0];
-  }
-  private updateChart(): void {
-    if (!this.report) {
-      this.toastr.error('Selecione um período', 'Atenção');
-      return;
-    }
-    console.log(this.report.sales_by_category);
-
-    this.chartData = {
-      labels: this.report.sales_by_category.map((cat) => cat.name),
-      datasets: [
-        {
-          data: this.report.sales_by_category.map((cat) =>
-            Number(cat.total_revenue),
-          ),
-          backgroundColor: this.colors.slice(
-            0,
-            this.report.sales_by_category.length,
-          ),
-          borderWidth: 2,
-          borderColor: '#ffffff',
-        },
-      ],
-    };
   }
 }
