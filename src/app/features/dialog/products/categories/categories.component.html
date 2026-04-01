@@ -1,0 +1,15 @@
+<div class="dialog-categories">
+    <h2>Categorias</h2>
+    <div class="lista-categorias">
+        @for (category of categories; track category.id) {
+            <div class="categoria">
+                <h3>{{ category.name }}</h3>
+                <small>{{ category.products_count }} produto(s) registrados</small>
+                <div class="btns">
+                    <button type="button" class="btn-editar" mat-button>Editar</button>
+                    <button type="button" class="btn-excluir" mat-button>Excluir</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

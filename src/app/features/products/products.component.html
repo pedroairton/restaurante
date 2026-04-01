@@ -8,19 +8,24 @@
   </div>
   <div class="conteudo-produtos">
     <div class="filtros">
-        <mat-form-field>
-            <mat-label>Buscar produtos...</mat-label>
-            <input type="text" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Categoria</mat-label>
-            <mat-select [disabled]="categories.length == 0">
-                @for (category of categories; track category.id) {
-                    <mat-option [value]="category.id">{{ category.name }}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-        <button (click)="openDialog()">Novo Produto</button>
+        <div class="campos-busca">
+            <mat-form-field>
+                <mat-label>Buscar produtos...</mat-label>
+                <input type="text" matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Categoria</mat-label>
+                <mat-select [disabled]="categories.length == 0">
+                    @for (category of categories; track category.id) {
+                        <mat-option [value]="category.id">{{ category.name }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="btns">
+            <button (click)="openCategoriesDialog()" type="button" class="btn-categorias" mat-button>Categorias</button>
+            <button (click)="openDialog()" type="button" class="btn-novo" mat-button>Novo Produto</button>
+        </div>
     </div>
     <div class="tabela">
         <table>
@@ -41,9 +46,9 @@
                         <td>{{ product.description }}</td>
                         <td>{{ product.category?.name }}</td>
                         <td>
-                            <button type="button" (click)="openChartDialog(product)" class="btn-dados">Dados</button>
-                            <button type="button" (click)="openDialog(product)" class="btn-editar">Editar</button>
-                            <button type="button" class="btn-excluir">Excluir</button>
+                            <button type="button" mat-button (click)="openChartDialog(product)" class="btn-dados">Dados</button>
+                            <button type="button" mat-button (click)="openDialog(product)" class="btn-editar">Editar</button>
+                            <button type="button" mat-button class="btn-excluir">Excluir</button>
                         </td>
                     </tr>
                 }

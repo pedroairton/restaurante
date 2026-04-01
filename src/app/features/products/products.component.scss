@@ -5,12 +5,35 @@
     padding: 1rem;
     border-radius: 1rem;
     .filtros{
-        width: 50%;
         display: flex;
         align-items: center;
-        gap: 1rem;
-        mat-form-field:first-child{
-            flex: 1;
+        .campos-busca{
+            width: 50%;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            mat-form-field:first-child{
+                flex: 1;
+            }
+        }
+        .btns{
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            button{
+                border: none;
+                transition: .3s;
+                border-radius: 5px;
+            }
+            .btn-categorias{
+                background-color: #e2c20a;
+                color: black;
+            }
+            .btn-novo{
+                background-color: #1aa04e;
+                color: white;
+            }
         }
     }
     .tabela{

@@ -10,10 +10,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormProductComponent } from '../dialog/products/form-product/form-product.component';
 import { ChartProductComponent } from '../dialog/products/chart-product/chart-product.component';
 import { LoadingComponent } from "../../shared/components/loading/loading.component";
+import { MatButtonModule } from '@angular/material/button';
+import { CategoriesComponent } from '../dialog/products/categories/categories.component';
 
 @Component({
   selector: 'app-products',
-  imports: [MatFormFieldModule, MatLabel, MatInputModule, MatSelectModule, CurrencyPipe, LoadingComponent],
+  imports: [MatFormFieldModule, MatLabel, MatInputModule, MatSelectModule, CurrencyPipe, LoadingComponent, MatButtonModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
@@ -75,7 +77,17 @@ export class ProductsComponent {
   openChartDialog(product: Product) {
     const dialogRef = this.dialog.open(ChartProductComponent, {
       width: '800px',
+      maxWidth: '90vw',
       data: product,
     })
+  }
+  openCategoriesDialog() {
+    const dialogRef = this.dialog.open(CategoriesComponent, {
+      width: '700px',
+      maxWidth: '90vw',
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.loadProducts();
+    });
   }
 }
