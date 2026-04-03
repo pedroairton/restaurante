@@ -73,6 +73,11 @@
             margin: 0 0.5rem;
             aspect-ratio: 1;
           }
+          .btn-excluir {
+            background-color: #ff0000;
+            color: white;
+            border-radius: 5px;
+          }
         }
         tr:not(:last-child) {
           td {
@@ -118,7 +123,7 @@
       .btn-finalizar {
         width: 100%;
         padding: 1rem;
-        border-radius: 50px;
+        border-radius: 5px;
         border: none;
         background-color: #202020;
         color: white;
@@ -165,6 +170,7 @@
                   align-items: center;
                   .btn-finalizar {
                     background-color: #197208;
+                    border-radius: 5px;
                     color: white;
                     padding: 0.5rem 1rem;
                     border: none;
@@ -177,6 +183,7 @@
                   .btn-cancelar {
                     background-color: #f44336;
                     color: white;
+                    border-radius: 5px;
                     padding: 0.5rem 1rem;
                     border: none;
                     cursor: pointer;

@@ -19,6 +19,7 @@ import {
   SelectedItem,
 } from '../../core/models/order-item.model';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-orders',
@@ -33,6 +34,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NgxMatSelectSearchModule,
     MatExpansionModule,
     DatePipe,
+    MatButtonModule
   ],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',

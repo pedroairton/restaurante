@@ -65,6 +65,23 @@ export class ProductsComponent {
       },
     });
   }
+  deleteProduct(product: Product) {
+    if(!confirm('Tem certeza que deseja deletar esse produto?')) return
+    this.apiService.deleteProduct(product.id).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.loadProducts();
+        this.toastr.success('Produto deletado com sucesso', 'Sucesso');
+      },
+      error: (error) => {
+        console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao deletar produto',
+        );
+      },
+    });
+  }
   openDialog(product?: Product) {
     const dialogRef = this.dialog.open(FormProductComponent, {
       width: '500px',

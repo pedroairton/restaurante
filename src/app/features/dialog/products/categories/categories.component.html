@@ -1,15 +1,54 @@
 <div class="dialog-categories">
+  <div class="topo">
     <h2>Categorias</h2>
-    <div class="lista-categorias">
-        @for (category of categories; track category.id) {
-            <div class="categoria">
-                <h3>{{ category.name }}</h3>
-                <small>{{ category.products_count }} produto(s) registrados</small>
-                <div class="btns">
-                    <button type="button" class="btn-editar" mat-button>Editar</button>
-                    <button type="button" class="btn-excluir" mat-button>Excluir</button>
-                </div>
-            </div>
-        }
-    </div>
+    <button (click)="newCategory()" mat-button>Novo Produto</button>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel
+      [expanded]="panelOpenState()"
+      (opened)="panelOpenState.set(true)"
+      (closed)="panelOpenState.set(false)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{
+          isEditMode ? "Editar Categoria" : "Nova categoria"
+        }}</mat-panel-title>
+        <!-- <mat-panel-description>
+          This is a summary of the content
+        </mat-panel-description> -->
+      </mat-expansion-panel-header>
+      <form (ngSubmit)="submit()" [formGroup]="formGroup" class="form-produto">
+        <mat-form-field>
+          <mat-label>Nome</mat-label>
+          <input type="text" matInput formControlName="name" />
+        </mat-form-field>
+        <button
+          type="submit"
+          [className]="isEditMode ? 'btn-editar' : 'btn-salvar'"
+          mat-button
+        >
+          {{ isEditMode ? "Editar" : "Salvar" }}
+        </button>
+      </form>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <div class="lista-categorias">
+    @for (category of categories; track category.id) {
+      <div class="categoria">
+        <h3>{{ category.name }}</h3>
+        <small>{{ category.products_count }} produto(s) registrados</small>
+        <div class="btns">
+          <button
+            (click)="editCategory(category)"
+            type="button"
+            class="btn-editar"
+            mat-button
+          >
+            Editar
+          </button>
+          <button (click)="deleteCategory(category)" type="button" class="btn-excluir" mat-button>Excluir</button>
+        </div>
+      </div>
+    }
+  </div>
 </div>

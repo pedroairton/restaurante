@@ -48,7 +48,7 @@
                         <td>
                             <button type="button" mat-button (click)="openChartDialog(product)" class="btn-dados">Dados</button>
                             <button type="button" mat-button (click)="openDialog(product)" class="btn-editar">Editar</button>
-                            <button type="button" mat-button class="btn-excluir">Excluir</button>
+                            <button type="button" mat-button (click)="deleteProduct(product)" class="btn-excluir">Excluir</button>
                         </td>
                     </tr>
                 }

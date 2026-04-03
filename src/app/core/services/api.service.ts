@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Dashboard } from '../models/dashboard.model';
 import { CreateOrderPayload } from '../models/order-item.model';
+import { Category } from '../models/products.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,6 +44,9 @@ export class ApiService {
   updateProduct(id: number, payload: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/products/${id}`, payload);
   }
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/products/${id}`);
+  }
   getProductSalesStats(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/products/${id}/sales-stats`);
   }
@@ -60,5 +64,17 @@ export class ApiService {
     return this.http.patch(`${this.apiUrl}/orders/${orderId}/status`, {
       status,
     });
+  }
+
+  createCategory(payload: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/categories`, payload);
+  }
+
+  updateCategory(category: Category, payload: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/categories/${category.id}`, payload);
+  }
+
+  deleteCategory(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/categories/${id}`);
   }
 }
