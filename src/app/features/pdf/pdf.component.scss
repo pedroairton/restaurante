@@ -1,20 +1,4 @@
-.page-reports {
-  .topo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .periodo {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      select {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-bottom: solid 1px black;
-        background-color: transparent;
-      }
-    }
-  }
+.pdf {
   .conteudo {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

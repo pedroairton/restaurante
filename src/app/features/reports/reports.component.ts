@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { LoadingComponent } from '../../shared/components/loading/loading.component';
 import { MatIconModule } from '@angular/material/icon';
 import { BaseChartDirective } from 'ng2-charts';
@@ -16,6 +16,7 @@ import { Report } from '../../core/models/reports.model';
 import { CurrencyPipe } from '@angular/common';
 import { ChartTopProductsComponent } from '../report-charts/chart-top-products/chart-top-products.component';
 import { ChartSalesByCategoryComponent } from "../report-charts/chart-sales-by-category/chart-sales-by-category.component";
+import { PdfComponent } from '../pdf/pdf.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -38,7 +39,8 @@ export const MY_DATE_FORMATS = {
     ReactiveFormsModule,
     CurrencyPipe,
     ChartTopProductsComponent,
-    ChartSalesByCategoryComponent
+    ChartSalesByCategoryComponent,
+    PdfComponent
 ],
   providers: [
     provideNativeDateAdapter(),
@@ -49,6 +51,8 @@ export const MY_DATE_FORMATS = {
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ReportsComponent {
+  @ViewChild('pdfReport') pdfReportComponent!: PdfComponent;
+
   isLoading = false;
   private apiService = inject(ApiService);
   private fb = inject(FormBuilder);
@@ -63,6 +67,7 @@ export class ReportsComponent {
   });
 
   report: Report | null = null;
+  isExporting = false;
 
   ngOnInit() {
     this.loadMonthlyReport();
@@ -132,5 +137,20 @@ export class ReportsComponent {
   private formatDate(date: Date | null): string | null {
     if (!date) return null;
     return date.toISOString().split('T')[0];
+  }
+  async exportToPDF(): Promise<void>{
+    if(!this.report) return
+    
+    this.isExporting = true
+
+    try{
+      await this.pdfReportComponent.generatePDF()
+      this.toastr.success('Relatório gerado com sucesso', 'Sucesso')
+    } catch(error){
+      console.log(error);
+      this.toastr.error('Erro desconhecido', 'Erro ao gerar relatório');
+    } finally {
+      this.isExporting = false
+    }
   }
 }

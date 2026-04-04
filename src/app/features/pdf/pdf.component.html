@@ -1,42 +1,4 @@
-<article class="page-reports">
-  @if (isLoading) {
-    <app-loading></app-loading>
-  }
-  <div class="topo">
-    <div class="titulo">
-      <h1>Relatórios</h1>
-      <p>Métricas e insights do sistema</p>
-    </div>
-    <div class="periodo">
-      <form (ngSubmit)="submit()" [formGroup]="rangeForm">
-        <mat-form-field>
-          <mat-label>Enter a date range</mat-label>
-          <mat-date-range-input [rangePicker]="picker">
-            <input
-              formControlName="start_date"
-              matStartDate
-              placeholder="Start date"
-            />
-            <input
-              formControlName="end_date"
-              matEndDate
-              placeholder="End date"
-            />
-          </mat-date-range-input>
-          <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-date-range-picker #picker></mat-date-range-picker>
-        </mat-form-field>
-        <button type="submit">Enviar</button>
-      </form>
-      <button (click)="exportToPDF()" [disabled]="isExporting" type="button">
-        Exportar para PDF
-      </button>
-    </div>
-  </div>
+<article class="pdf">
   <div class="conteudo">
     <div class="card">
       <div class="topo-card">
@@ -87,5 +49,4 @@
       }
     </div>
   </div>
-  <app-pdf #pdfReport [report]="report"></app-pdf>
 </article>
