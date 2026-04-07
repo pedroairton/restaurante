@@ -23,16 +23,16 @@
               placeholder="End date"
             />
           </mat-date-range-input>
-          <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
           <mat-datepicker-toggle
             matIconSuffix
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
-        <button type="submit">Enviar</button>
+        <button class="btn-enviar" type="submit" mat-button>Enviar</button>
       </form>
-      <button (click)="exportToPDF()" [disabled]="isExporting" type="button">
+      <button class="btn-pdf" (click)="exportToPDF()" [disabled]="isExporting" type="button" mat-button>
+        <mat-icon>picture_as_pdf</mat-icon>
         Exportar para PDF
       </button>
     </div>
@@ -87,5 +87,7 @@
       }
     </div>
   </div>
-  <app-pdf #pdfReport [report]="report"></app-pdf>
+  @if (isExporting || true) {
+    <app-pdf #pdfReport [report]="report"></app-pdf>
+  }
 </article>

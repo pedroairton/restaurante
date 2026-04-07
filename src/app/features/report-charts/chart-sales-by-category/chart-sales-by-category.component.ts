@@ -31,6 +31,10 @@ export class ChartSalesByCategoryComponent {
         labels: {
           padding: 16,
           usePointStyle: true,
+          color: '#000000',
+          font: {
+            size: 16,
+          }
         },
       },
       tooltip: {

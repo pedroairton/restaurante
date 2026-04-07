@@ -113,13 +113,6 @@ export class DashboardComponent {
       console.log('chart updated');
     }
   }
-  floatToBRL(value: number | undefined) {
-    if (!value) return 'Erro';
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-  }
   getDashboard() {
     this.isLoading = true;
     this.apiService.getDashboard().subscribe({

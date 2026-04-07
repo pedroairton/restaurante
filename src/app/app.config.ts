@@ -7,6 +7,7 @@ import { authInterceptor } from './core/interceptors/auth-interceptor';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +24,8 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: true,
       closeButton: true,
       extendedTimeOut: 0,
-    }), provideCharts(withDefaultRegisterables()),
+    }),
+    provideCharts(withDefaultRegisterables()),
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
   ],
 };

@@ -17,18 +17,8 @@ import { CurrencyPipe } from '@angular/common';
 import { ChartTopProductsComponent } from '../report-charts/chart-top-products/chart-top-products.component';
 import { ChartSalesByCategoryComponent } from "../report-charts/chart-sales-by-category/chart-sales-by-category.component";
 import { PdfComponent } from '../pdf/pdf.component';
+import { MatButton } from "@angular/material/button";
 
-export const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'DD/MM/YYYY',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 @Component({
   selector: 'app-reports',
   imports: [
@@ -40,11 +30,11 @@ export const MY_DATE_FORMATS = {
     CurrencyPipe,
     ChartTopProductsComponent,
     ChartSalesByCategoryComponent,
-    PdfComponent
+    PdfComponent,
+    MatButton
 ],
   providers: [
     provideNativeDateAdapter(),
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
   ],
   templateUrl: './reports.component.html',
   styleUrl: './reports.component.scss',

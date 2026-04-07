@@ -2,6 +2,7 @@ export interface Dashboard {
     monthly_revenue: number,
     monthly_orders: number,
     total_products: number,
+    avg_ticket: number,
     weekly_sales: WeeklySales[]
 }
 export interface WeeklySales {

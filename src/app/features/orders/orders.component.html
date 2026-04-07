@@ -148,10 +148,9 @@
         <div class="info">
           <span>Mesa</span>
           <p class="texto-mesa">
-            Mesa
             {{
               selectedTableNumber
-                ? selectedTableNumber
+                ? 'Mesa ' + selectedTableNumber
                 : "Nenhuma mesa selecionada"
             }}
           </p>
@@ -185,71 +184,86 @@
     <div class="pedidos">
       <h3>Pedidos em andamento</h3>
       <div class="lista-pedidos">
-        @for (order of pendingOrders; track order.id) {
-          <mat-accordion class="pedido">
-            <mat-expansion-panel class="mat-elevation-z">
-              <mat-expansion-panel-header>
-                <div class="header-panel">
-                  <mat-panel-title>
-                    <h4>
-                      Mesa {{ order.table.number }} - Total:
-                      {{ order.total | currency: "BRL" : "symbol" : "1.2-2" }}
-                    </h4>
-                  </mat-panel-title>
-                  <mat-panel-description>
-                    Pedido feito às {{ order.created_at | date: "HH:mm" }} -
-                    {{ order.created_at | date: "dd/MM/yyyy" }}
-                  </mat-panel-description>
-                  <div class="btns">
-                    <button
-                      class="btn-finalizar"
-                      (click)="finalizeOrder(order)"
-                      [disabled]="isEditMode"
-                    >
-                      Finalizar
-                    </button>
-                    <button
-                      class="btn-cancelar"
-                      (click)="cancelOrder(order)"
-                      [disabled]="isEditMode"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                </div>
-              </mat-expansion-panel-header>
-              <hr />
-              <div class="itens">
-                <div class="topo-itens">
-                  <h4>Itens do pedido</h4>
-                  <div class="btns">
-                    <button
-                      (click)="editOrder(order)"
-                      class="btn-editar"
-                      [disabled]="isEditMode && editingOrderId !== order.id"
-                    >
-                      @if (editingOrderId === order.id) {
-                        Editando...
-                      } @else {
-                        Editar itens
+        @if (pendingOrders.length > 0) {
+          @for (order of pendingOrders; track order.id) {
+            <mat-accordion class="pedido">
+              <mat-expansion-panel class="mat-elevation-z">
+                <mat-expansion-panel-header>
+                  <div class="header-panel">
+                    <mat-panel-title>
+                      <h4>
+                        Mesa {{ order.table.number }} - Total:
+                        {{ order.total | currency: "BRL" : "symbol" : "1.2-2" }}
+                      </h4>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                      Pedido feito às {{ order.created_at | date: "HH:mm" }} -
+                      {{ order.created_at | date: "dd/MM/yyyy" }}
+                      @if(order.created_at !== order.updated_at){
+                        (atualizado às {{ order.updated_at | date: "HH:mm" }} -
+                        {{ order.updated_at | date: "dd/MM/yyyy" }})
                       }
-                    </button>
-                  </div>
-                </div>
-                @for (item of order.items; track item.id) {
-                  <div class="item">
-                    <div class="desc-item">
-                      <h4 class="nome">{{ item.product.name }}</h4>
-                      <span class="vendas">{{ item.quantity }}x</span>
+                    </mat-panel-description>
+                    <div class="btns">
+                      <button
+                        class="btn-finalizar"
+                        (click)="finalizeOrder(order)"
+                        [disabled]="isEditMode"
+                      >
+                        Finalizar
+                      </button>
+                      <button
+                        class="btn-cancelar"
+                        (click)="cancelOrder(order)"
+                        [disabled]="isEditMode"
+                      >
+                        Cancelar
+                      </button>
                     </div>
-                    <span class="receita">
-                      {{ item.subtotal | currency: "BRL" : "symbol" : "1.2-2" }}
-                    </span>
+                  </div>
+                </mat-expansion-panel-header>
+                <hr />
+                @if (order.observations) {
+                  <div class="desc">
+                    <h4>Observações do pedido</h4>
+                    <small>{{ order.observations }}</small>
                   </div>
                 }
-              </div>
-            </mat-expansion-panel>
-          </mat-accordion>
+                <div class="itens">
+                  <div class="topo-itens">
+                    <h4>Itens do pedido</h4>
+                    <div class="btns">
+                      <button
+                        (click)="editOrder(order)"
+                        class="btn-editar"
+                        [disabled]="isEditMode && editingOrderId !== order.id"
+                      >
+                        @if (editingOrderId === order.id) {
+                          Editando...
+                        } @else {
+                          Editar itens
+                        }
+                      </button>
+                    </div>
+                  </div>
+                  @for (item of order.items; track item.id) {
+                    <div class="item">
+                      <div class="desc-item">
+                        <h4 class="nome">{{ item.product.name }}</h4>
+                        <span class="vendas">{{ item.quantity }}x</span>
+                      </div>
+                      <span class="receita">
+                        {{ item.subtotal | currency: "BRL" : "symbol" : "1.2-2" }}
+                      </span>
+                    </div>
+                  }
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          }
+        }
+        @else {
+          <small>Nenhum pedido pendente no momento</small>
         }
       </div>
     </div>

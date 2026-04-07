@@ -1,4 +1,11 @@
-<article class="pdf">
+<article #pdfContent class="pdf">
+  <div class="topo">
+    <img src="./logo.png" alt="">
+    <div class="infos">
+      <h1>Relatório de pedidos</h1>
+      <small>{{ report?.period?.start_date | date: "dd/MM/yyyy" }} - {{ report?.period?.end_date | date: "dd/MM/yyyy" }}</small>
+    </div>
+  </div>
   <div class="conteudo">
     <div class="card">
       <div class="topo-card">

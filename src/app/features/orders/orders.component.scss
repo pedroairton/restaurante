@@ -195,6 +195,11 @@
                 }
               }
             }
+            .desc{
+              margin-top: 1rem;
+              background-color: #f0f0f0;
+              padding: 0.25rem 0.5rem;
+            }
             .itens {
               display: flex;
               flex-direction: column;
@@ -202,6 +207,22 @@
               height: 300px;
               overflow-y: scroll;
               margin-top: 1rem;
+              .topo-itens{
+                .btns{
+                  .btn-editar{
+                    background-color: #e2c20a;
+                    color: black;
+                    border-radius: 5px;
+                    padding: 0.5rem 1rem;
+                    border: none;
+                    cursor: pointer;
+                    transition: 0.3s;
+                    &:hover {
+                      background-color: #ffc107;
+                    }
+                  }
+                }
+              }
               .item {
                 display: flex;
                 justify-content: space-between;

@@ -1,6 +1,12 @@
 // orders.component.ts
 
-import { Component, inject, signal, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,10 +40,11 @@ import { MatButtonModule } from '@angular/material/button';
     NgxMatSelectSearchModule,
     MatExpansionModule,
     DatePipe,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss',
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrdersComponent implements OnInit {
   private apiService = inject(ApiService);
@@ -74,7 +81,11 @@ export class OrdersComponent implements OnInit {
   }
 
   get totalPrice(): number {
-    return this.selectedItems.reduce((sum, item) => sum + item.subtotal, 0);
+    const value = this.selectedItems.reduce(
+      (sum, item) => sum + item.subtotal,
+      0,
+    );
+    return value;
   }
 
   get selectedTableNumber(): number | null {
@@ -118,7 +129,7 @@ export class OrdersComponent implements OnInit {
       error: (error) => {
         this.toastr.error(
           error.error?.message || 'Erro desconhecido',
-          'Erro ao buscar pedidos pendentes'
+          'Erro ao buscar pedidos pendentes',
         );
       },
     });
@@ -130,14 +141,12 @@ export class OrdersComponent implements OnInit {
       next: (response) => {
         this.allTables = response;
         // Filtra apenas as disponíveis para o select (modo criação)
-        this.tables = response.filter(
-          (t: Table) => t.status === 'available'
-        );
+        this.tables = response.filter((t: Table) => t.status === 'available');
       },
       error: (error) => {
         this.toastr.error(
           error.error?.message || 'Erro desconhecido',
-          'Erro ao buscar mesas'
+          'Erro ao buscar mesas',
         );
       },
     });
@@ -152,7 +161,7 @@ export class OrdersComponent implements OnInit {
       error: (error) => {
         this.toastr.error(
           error.error?.message || 'Erro desconhecido',
-          'Erro ao buscar produtos'
+          'Erro ao buscar produtos',
         );
       },
     });
@@ -169,8 +178,8 @@ export class OrdersComponent implements OnInit {
 
       this.filteredProducts.next(
         this.products.filter((product: Product) =>
-          product.name.toLowerCase().includes(term)
-        )
+          product.name.toLowerCase().includes(term),
+        ),
       );
     });
   }
@@ -193,21 +202,21 @@ export class OrdersComponent implements OnInit {
     }
 
     const existingItem = this.selectedItems.find(
-      (item) => item.product.id === productId
+      (item) => item.product.id === productId,
     );
-
     if (existingItem) {
       existingItem.quantity += 1;
-      existingItem.subtotal = existingItem.quantity * existingItem.product.price;
+      existingItem.subtotal =
+        existingItem.quantity * existingItem.product.price;
       this.toastr.info(
         `${product.name} — quantidade: ${existingItem.quantity}`,
-        'Quantidade atualizada'
+        'Quantidade atualizada',
       );
     } else {
       this.selectedItems.push({
         product,
         quantity: 1,
-        subtotal: product.price,
+        subtotal: Number(product.price),
       });
       this.toastr.success(`${product.name} adicionado ao pedido`, 'Sucesso');
     }
@@ -236,7 +245,10 @@ export class OrdersComponent implements OnInit {
 
   removeItem(index: number): void {
     const removed = this.selectedItems.splice(index, 1)[0];
-    this.toastr.info(`${removed.product.name} removido do pedido`, 'Item removido');
+    this.toastr.info(
+      `${removed.product.name} removido do pedido`,
+      'Item removido',
+    );
   }
 
   // ══════════════════════════════════════
@@ -261,7 +273,7 @@ export class OrdersComponent implements OnInit {
     this.selectedItems = order.items.map((item) => {
       // Tenta encontrar o produto completo na lista carregada
       const fullProduct = this.products.find(
-        (p) => p.id === item.product_id || p.id === item.product.id
+        (p) => p.id === item.product_id || p.id === item.product.id,
       );
 
       const product: Product = fullProduct || {
@@ -285,7 +297,7 @@ export class OrdersComponent implements OnInit {
 
     this.toastr.info(
       `Editando pedido da Mesa ${order.table.number}`,
-      'Modo edição'
+      'Modo edição',
     );
   }
 
@@ -295,7 +307,7 @@ export class OrdersComponent implements OnInit {
    */
   private updateTablesForEdit(currentTableId: number): void {
     const availableTables = this.allTables.filter(
-      (t) => t.status === 'available' || t.id === currentTableId
+      (t) => t.status === 'available' || t.id === currentTableId,
     );
     this.tables = availableTables;
   }
@@ -311,7 +323,7 @@ export class OrdersComponent implements OnInit {
       next: () => {
         this.toastr.success(
           `Pedido da Mesa ${order.table.number} finalizado!`,
-          'Pedido pago'
+          'Pedido pago',
         );
         this.loadPendingOrders();
         this.loadTables();
@@ -319,20 +331,25 @@ export class OrdersComponent implements OnInit {
       error: (error) => {
         this.toastr.error(
           error.error?.message || 'Erro desconhecido',
-          'Erro ao finalizar pedido'
+          'Erro ao finalizar pedido',
         );
       },
     });
   }
 
   cancelOrder(order: Order): void {
-    if (!confirm(`Cancelar pedido da Mesa ${order.table.number}? Esta ação não pode ser desfeita.`)) return;
+    if (
+      !confirm(
+        `Cancelar pedido da Mesa ${order.table.number}? Esta ação não pode ser desfeita.`,
+      )
+    )
+      return;
 
     this.apiService.updateOrderStatus(order.id, 'cancelled').subscribe({
       next: () => {
         this.toastr.success(
           `Pedido da Mesa ${order.table.number} cancelado.`,
-          'Pedido cancelado'
+          'Pedido cancelado',
         );
         // Se estava editando este pedido, sai do modo edição
         if (this.editingOrderId === order.id) {
@@ -344,7 +361,7 @@ export class OrdersComponent implements OnInit {
       error: (error) => {
         this.toastr.error(
           error.error?.message || 'Erro desconhecido',
-          'Erro ao cancelar pedido'
+          'Erro ao cancelar pedido',
         );
       },
     });
@@ -377,9 +394,10 @@ export class OrdersComponent implements OnInit {
     };
 
     // Decide se cria ou atualiza
-    const request$ = this.isEditMode && this.editingOrderId
-      ? this.apiService.updateOrder(this.editingOrderId, payload)
-      : this.apiService.createOrder(payload);
+    const request$ =
+      this.isEditMode && this.editingOrderId
+        ? this.apiService.updateOrder(this.editingOrderId, payload)
+        : this.apiService.createOrder(payload);
 
     request$.subscribe({
       next: (response) => {
@@ -390,7 +408,7 @@ export class OrdersComponent implements OnInit {
         } else {
           this.toastr.success(
             `Pedido #${response.id} criado com sucesso!`,
-            'Sucesso'
+            'Sucesso',
           );
         }
 
@@ -407,7 +425,9 @@ export class OrdersComponent implements OnInit {
         } else {
           this.toastr.error(
             error.error?.message || 'Erro desconhecido',
-            this.isEditMode ? 'Erro ao atualizar pedido' : 'Erro ao criar pedido'
+            this.isEditMode
+              ? 'Erro ao atualizar pedido'
+              : 'Erro ao criar pedido',
           );
         }
       },

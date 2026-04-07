@@ -43,6 +43,14 @@ export class ChartTopProductsComponent {
           callback: (value) => `${value} un.`,
         },
       },
+      y: {
+        ticks: {
+          font: {
+            size: 16,
+          },
+          color: '#000000',
+        }
+      }
     },
   };
 

@@ -12,7 +12,7 @@
         <span>Receita Total do mês</span>
         <mat-icon>attach_money</mat-icon>
       </div>
-      <h2 class="valor">{{ floatToBRL(dashboard?.monthly_revenue) }}</h2>
+      <h2 class="valor">{{ dashboard?.monthly_revenue | currency: "BRL" : "symbol" : "1.2-2" }}</h2>
     </div>
     <div class="card">
       <div class="topo-card">
@@ -33,7 +33,7 @@
         <span>Ticket Médio deste mês</span>
         <mat-icon>attach_money</mat-icon>
       </div>
-      <h2 class="valor">R$ 105,46</h2>
+      <h2 class="valor">{{ dashboard?.avg_ticket | currency: "BRL" : "symbol" : "1.2-2" }}</h2>
     </div>
     <div class="card grafico">
       <div class="topo-card">

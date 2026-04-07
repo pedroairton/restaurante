@@ -5,13 +5,28 @@
     align-items: center;
     .periodo {
       display: flex;
-      align-items: center;
+      // align-items: center;
       gap: 1rem;
+      form{
+        display: flex;
+        gap: 1rem;
+      }
       select {
         padding: 0.5rem 1rem;
         border: none;
         border-bottom: solid 1px black;
         background-color: transparent;
+      }
+      button{
+        color: white;
+        border-radius: 5px;
+        transition: .3s ease;
+        &.btn-enviar{
+          background-color: green;
+        }
+        &.btn-pdf{
+          background-color: #f44336;
+        }
       }
     }
   }
