@@ -1,9 +1,12 @@
-<header>
+<header [class.ativo]="active">
     <div class="logo">
         <div class="img-logo">
             <img src="/logo.png" alt="Logo">
         </div>
         <h1>Restaurante</h1>
+    </div>
+    <div class="toggle" (click)="active = !active">
+        <mat-icon>menu</mat-icon>
     </div>
     <nav>
         <a routerLink="/" routerLinkActive="active">Dashboard</a>

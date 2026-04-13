@@ -67,3 +67,69 @@
     }
   }
 }
+@media (max-width: 1600px){
+    .dashboard{
+        .conteudo{
+            gap: 2rem;
+        }
+    }
+}
+
+@media (max-width: 1368px){
+    .dashboard{
+      .conteudo{
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+}
+
+@media (max-width: 580px){
+    .dashboard{
+      .conteudo{
+        grid-template-columns: 1fr;
+        .card{
+          &.grafico{
+            grid-column: span 1;
+            .topo-card{
+              h3{
+                font-size: 1.25rem;
+              }
+            }
+            .chart-container{
+              height: auto;
+              aspect-ratio: 16/9;
+            }
+            .itens{
+              .item{
+                .desc-item{
+                  .nome{
+                    font-size: 1rem;
+                  }
+                  .vendas{
+                    font-size: 0.875rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+}
+
+@media (max-width: 375px){
+    .dashboard{
+      .conteudo{
+        .card{
+          &.grafico{
+            .chart-container{
+              canvas{
+                // max-width: 100%;
+                min-width: 400px;
+              }
+            }
+          }
+        }
+      }
+    }
+}
