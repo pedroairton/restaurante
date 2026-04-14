@@ -11,6 +11,26 @@ header{
     gap: 2rem;
     padding: 1rem;
     z-index: 1000;
+    translate: 0 0;
+    transition: .3s;
+    &.ativo{
+        translate: -100% 0;
+    }
+    .toggle{
+        background-color: #202020;
+        position: absolute;
+        right: 0;
+        top: 80px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        // display: flex;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        translate: 100% 0;
+        border-radius: 0 5px 5px 0;
+    }
     .logo{
         display: flex;
         align-items: center;
@@ -45,6 +65,13 @@ header{
             &:hover{
                 background-color: #404040;
             }
+        }
+    }
+}
+@media (max-width: 1024px){
+    header{
+        .toggle{
+            display: flex;
         }
     }
 }
