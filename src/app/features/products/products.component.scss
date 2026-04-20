@@ -58,3 +58,43 @@
     }
   }
 }
+
+@media (max-width: 1368px){
+    .page-products{
+        .conteudo-produtos{
+            .tabela{
+                table{
+                    tr{
+                        td,th{
+                            &:nth-child(3){
+                                max-width: 20%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media(max-width: 1024px){
+    .page-products{
+        .conteudo-produtos{
+            .filtros{
+                flex-direction: column;
+                .campos-busca{
+                    width: 100%;
+                }
+                .btns{
+                    margin-left: 0;
+                }
+            }
+            .tabela{
+                overflow-x: scroll;
+                table{
+                    min-width: 1000px;
+                }
+            }
+        }
+    }
+}

@@ -264,11 +264,34 @@
     .conteudo{
       grid-template-columns: 1fr;
       width: 100%;
-      .itens-selecionados{
-        overflow: scroll;
-        .tabela-itens{
-          table{
-            min-width: 670px;
+    }
+  }
+}
+
+@media(max-width: 580px){
+  .page-orders{
+    .conteudo{
+      .form-pedido{
+        overflow-x: scroll;
+        .topo-form{
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          h3:nth-child(2){
+            font-size: 90%;
+          }
+        }
+        .itens-selecionados{
+          overflow: scroll;
+          .tabela-itens{
+            min-width: 600px;
+            thead{
+              tr{
+                th{
+                  font-size: 0.875rem;
+                }
+              }
+            }
           }
         }
       }

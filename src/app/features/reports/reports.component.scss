@@ -98,3 +98,33 @@
     }
   }
 }
+
+@media(max-width: 1600px){
+    .page-reports{
+        .conteudo{
+            gap: 2rem;
+        }
+    }
+}
+
+@media(max-width: 1024px){
+  .page-reports{
+    .topo{
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+      .periodo{
+        flex-direction: column;
+        align-self: center;
+      }
+    }
+    .conteudo{
+      grid-template-columns: repeat(1,1fr);
+      .card{
+        &.grafico{
+          grid-column: span 1;
+        }
+      }
+    }
+  }
+}

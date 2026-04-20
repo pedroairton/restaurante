@@ -6,8 +6,15 @@ main.main-login{
     margin-left: 0;
 }
 
+@media (max-width: 1368px){
+    main{
+        margin-left: 200px;
+    }
+}
+
 @media (max-width: 1024px){
     main{
         margin-left: 0;
+        padding: 1rem;
     }
 }

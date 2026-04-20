@@ -38,49 +38,52 @@ header {
   nav {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding: 1rem;
-    z-index: 1000;
-    translate: 0 0;
-    transition: .3s;
-    &.ativo{
-        translate: -100% 0;
+    a {
+      cursor: pointer;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: 0.3s ease;
+      &:hover {
+        background-color: #404040;
+      }
     }
-    .toggle{
-        background-color: #202020;
-        position: absolute;
-        right: 0;
-        top: 80px;
-        width: 40px;
-        height: 40px;
-        cursor: pointer;
-        // display: flex;
-        display: none;
+    .toggle {
+      background-color: #202020;
+      position: absolute;
+      right: 0;
+      top: 80px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      // display: flex;
+      display: none;
+      justify-content: center;
+      align-items: center;
+      translate: 100% 0;
+      border-radius: 0 5px 5px 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 2rem;
+      border-bottom: solid 1px white;
+      .img-logo {
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        display: flex;
         justify-content: center;
         align-items: center;
-        translate: 100% 0;
-        border-radius: 0 5px 5px 0;
-    }
-    .logo{
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding-bottom: 2rem;
-        border-bottom: solid 1px white;
-        .img-logo{
-            background-color: #f0f0f0;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            aspect-ratio: 1;
-            img{
-                width: 50px;
-            }
+        aspect-ratio: 1;
+        img {
+          width: 50px;
         }
-        h1{
-            font-size: 1.25rem;
-        }
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
     }
   }
 }
@@ -94,16 +97,6 @@ header {
         font-size: 1rem;
       }
     }
-<<<<<<< HEAD
-}
-@media (max-width: 1024px){
-    header{
-        .toggle{
-            display: flex;
-        }
-    }
-}
-=======
     nav {
       a {
         font-size: 1.25rem;
@@ -135,4 +128,3 @@ header {
     }
   }
 }
->>>>>>> 2360fd4cf714563e9f7aa809e1c7e51ec0e9ae4e
