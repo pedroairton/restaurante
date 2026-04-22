@@ -51,56 +51,26 @@
     <div class="card grafico">
       <div class="topo-card">
         <h3>Produtos mais vendidos</h3>
-        <select name="" id="">
+        <select (change)="changePeriod($event)">
           <option value="week" selected>Semana</option>
           <option value="month">Mês</option>
+          <option value="total">Total</option>
         </select>
       </div>
       <div class="itens">
-        @for (product of topProducts; track product.id) {
-          <div class="item">
-            <div class="desc-item">
-              <h4 class="nome">{{ product.product_name }}</h4>
-              <span class="vendas">{{ product.total_sold }} vendas</span>
+        @if (topProducts.length > 0) {
+          @for (product of topProducts; track product.id) {
+            <div class="item">
+              <div class="desc-item">
+                <h4 class="nome">{{ product.product_name }}</h4>
+                <span class="vendas">{{ product.total_sold }} vendas</span>
+              </div>
+              <span class="receita">{{ product.total_revenue | currency: 'BRL' : 'symbol': '1.2-2' }}</span>
             </div>
-            <span class="receita">{{ product.total_revenue | currency: 'BRL' : 'symbol': '1.2-2' }}</span>
-          </div>
+          }
+        } @else {
+          <h3>Nenhum produto vendido no período</h3>
         }
-        <div class="item">
-          <div class="desc-item">
-            <h4 class="nome">Pizza 4 Queijos</h4>
-            <span class="vendas">71 vendas</span>
-          </div>
-          <span class="receita">R$ 2.840</span>
-        </div>
-        <div class="item">
-          <div class="desc-item">
-            <h4 class="nome">Hambúrguer Artesanal</h4>
-            <span class="vendas">52 vendas</span>
-          </div>
-          <span class="receita">R$ 1.250</span>
-        </div>
-        <div class="item">
-          <div class="desc-item">
-            <h4 class="nome">Lasanha Bolonhesa</h4>
-            <span class="vendas">34 vendas</span>
-          </div>
-          <span class="receita">R$ 952</span>
-        </div>
-        <div class="item">
-          <div class="desc-item">
-            <h4 class="nome">Salmão Grelhado</h4>
-            <span class="vendas">18 vendas</span>
-          </div>
-          <span class="receita">R$ 900</span>
-        </div>
-        <div class="item">
-          <div class="desc-item">
-            <h4 class="nome">Tiramisù</h4>
-            <span class="vendas">14 vendas</span>
-          </div>
-          <span class="receita">R$ 420</span>
-        </div>
       </div>
     </div>
   </div>

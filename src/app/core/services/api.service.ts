@@ -16,8 +16,9 @@ export class ApiService {
   getDashboard(): Observable<Dashboard> {
     return this.http.get<Dashboard>(`${this.apiUrl}/dashboard`);
   }
-  getTopProducts(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/dashboard/top-products`);
+  getTopProducts(period?: any): Observable<any> {
+    const params = { period: period };
+    return this.http.get(`${this.apiUrl}/dashboard/top-products`, { params });
   }
   getProducts(params?: any): Observable<any> {
     return this.http.get(`${this.apiUrl}/products`, { params });

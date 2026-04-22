@@ -133,7 +133,7 @@ export class DashboardComponent {
         );
       },
     });
-    this.apiService.getTopProducts().subscribe({
+    this.apiService.getTopProducts('week').subscribe({
       next: (response) => {
         this.isLoading = false;
         this.topProducts = response;
@@ -173,5 +173,24 @@ export class DashboardComponent {
         },
       ],
     };
+  }
+  changePeriod(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    const value = target.value;
+    this.apiService.getTopProducts(value).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        this.topProducts = response;
+        console.log(this.topProducts);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        console.log(error);
+        this.toastr.error(
+          error.error?.message || 'Erro desconhecido',
+          'Erro ao buscar produtos mais vendidos',
+        );
+      },
+    })
   }
 }
