@@ -195,7 +195,7 @@
                 }
               }
             }
-            .desc{
+            .desc {
               margin-top: 1rem;
               background-color: #f0f0f0;
               padding: 0.25rem 0.5rem;
@@ -207,9 +207,9 @@
               height: 300px;
               overflow-y: scroll;
               margin-top: 1rem;
-              .topo-itens{
-                .btns{
-                  .btn-editar{
+              .topo-itens {
+                .btns {
+                  .btn-editar {
                     background-color: #e2c20a;
                     color: black;
                     border-radius: 5px;
@@ -245,13 +245,13 @@
   }
 }
 
-@media (max-width: 1368px){
-  .page-orders{
-    .conteudo{
+@media (max-width: 1368px) {
+  .page-orders {
+    .conteudo {
       grid-template-columns: 3fr 1fr;
       gap: 1rem;
-      .form-pedido{
-        .itens-selecionados{
+      .form-pedido {
+        .itens-selecionados {
           padding: 0;
         }
       }
@@ -259,39 +259,49 @@
   }
 }
 
-@media (max-width: 1024px){
-  .page-orders{
-    .conteudo{
+@media (max-width: 1024px) {
+  .page-orders {
+    .conteudo {
       grid-template-columns: 1fr;
       width: 100%;
     }
   }
 }
 
-@media(max-width: 580px){
-  .page-orders{
-    .conteudo{
-      .form-pedido{
+@media (max-width: 580px) {
+  .page-orders {
+    .conteudo {
+      .form-pedido {
         overflow-x: scroll;
-        .topo-form{
+        .topo-form {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
-          h3:nth-child(2){
+          h3:nth-child(2) {
             font-size: 90%;
           }
         }
-        .itens-selecionados{
+        .itens-selecionados {
           overflow: scroll;
-          .tabela-itens{
+          .tabela-itens {
             min-width: 600px;
-            .quantidade-cell{
-              padding: 0;
-            }
-            thead{
-              tr{
-                th{
+            thead {
+              tr {
+                th {
                   font-size: 0.875rem;
+                }
+              }
+            }
+            tbody {
+              tr {
+                td {
+                  font-size: 0.875rem;
+                  min-width: 130px;
+                  max-width: 160px;
+                  padding: 0.5rem;
+                }
+                .quantidade-cell {
+                  padding: 0;
                 }
               }
             }
